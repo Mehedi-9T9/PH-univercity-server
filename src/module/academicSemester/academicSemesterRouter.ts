@@ -1,8 +1,9 @@
 import express  from "express";
 import { academicSemesterControllars } from "./academicSemesterControllar";
-import { requestValidations } from "../middleware/requestValidation";
+
 import academicSemesterValidationSchema from "./academicSemesterValidationSchema";
+import requstValidation from "../middleware/requestValidation";
 const router =express.Router()
 
-router.post('/create-academic-semester',requestValidations.requstValidationSchema(academicSemesterValidationSchema),academicSemesterControllars.createAcademicSemester)
+router.post('/create-academic-semester',requstValidation(academicSemesterValidationSchema),academicSemesterControllars.createAcademicSemester)
 export const academidSemesterRoutes = router;

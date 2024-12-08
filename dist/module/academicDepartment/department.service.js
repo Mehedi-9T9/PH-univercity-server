@@ -9,16 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const requstValidation = (validationSchema) => {
-    return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const studentInfo = req.body;
-            validationSchema.parse(studentInfo);
-            return next();
-        }
-        catch (error) {
-            next(error);
-        }
-    });
+exports.departmentServices = void 0;
+const department_model_1 = require("./department.model");
+const createDepartmentIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield department_model_1.DepartmentModel.create(payload);
+    return result;
+});
+const updateDepartmentIntoDB = (payload, id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield department_model_1.DepartmentModel.findOneAndUpdate({ _id: id }, { name: payload.name }, { new: true });
+    return result;
+});
+exports.departmentServices = {
+    createDepartmentIntoDB,
+    updateDepartmentIntoDB
 };
-exports.default = requstValidation;
