@@ -7,4 +7,5 @@ const router =express.Router()
 
 router.post('/create-faculty',requstValidation(facultyValidatioSchema),facultyControllars.createFaculty)
 router.patch('/update-faculty/:facultyId',requstValidation(facultyValidatioSchema),facultyControllars.updateFaculty)
+router.get('/:facultyId',facultyControllars.getSingleFaculty)
 export const facultyRoutes=router

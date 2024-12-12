@@ -24,6 +24,7 @@ export type Tstudent = {
   email: string;
   studentId: string;
   userId: Types.ObjectId;
+  isDelete:boolean;
   admissionSemester:Types.ObjectId;
   contact: Tcontact;
   address: Taddress;

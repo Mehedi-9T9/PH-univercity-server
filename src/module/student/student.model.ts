@@ -49,6 +49,7 @@ const studentSchema = new Schema<Tstudent>({
     unique: true,
     ref: 'User',
   },
+  isDelete:{type:Boolean, default:false},
   admissionSemester:{type:Schema.Types.ObjectId,ref:'AcademicSemester',required:true},
   contact: contactShema,
   address: addressSchema,
