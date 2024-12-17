@@ -1,3 +1,4 @@
+import { TErrroSourceDemo } from './../../App/GlogalInterface/errorTypes';
 import { ErrorRequestHandler } from 'express';
 import { ZodError } from 'zod';
 import { TErrroSourceDemo } from '../../App/GlogalInterface/errorTypes';
@@ -46,6 +47,25 @@ const globalErrorHandle: ErrorRequestHandler = async (
     errorSources = simplifyError.errorSources
 
   }
+  //Todo
+  // else if(err instanceof Error){
+  //   message=err.message,
+  //   errorSources:TErrroSourceDemo=[{
+  //     path:"",
+  //     message:""
+  //   }]
+   
+  // }
+  //Todo
+  // else if(err.code ===11000){
+
+  //   // const simplifyError =handleDuplicateError(err)
+  //   // statusCode = simplifyError.statusCode
+  //   // message = simplifyError.message
+  //   // errorSources = simplifyError.errorSources
+  //   console.log("hello unique error");
+
+  // }
 
 
 
@@ -53,7 +73,7 @@ const globalErrorHandle: ErrorRequestHandler = async (
     status: false,
     message,
     errorSources,
-    // err,
+    err,
     stack: config.NODE_ENV ==="development"? err?.stack :null
 
 

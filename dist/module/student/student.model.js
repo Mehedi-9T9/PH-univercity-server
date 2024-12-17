@@ -30,6 +30,7 @@ const studentSchema = new mongoose_1.Schema({
         unique: true,
         ref: 'User',
     },
+    isDelete: { type: Boolean, default: false },
     admissionSemester: { type: mongoose_1.Schema.Types.ObjectId, ref: 'AcademicSemester', required: true },
     contact: contactShema,
     address: addressSchema,

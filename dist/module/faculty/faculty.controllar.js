@@ -21,13 +21,19 @@ const createFaculty = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     const result = yield faculty_service_1.facultyServices.createFacultyIntoDB(facultyInfo);
     (0, sendResponse_1.default)(res, { statusCode: 200, message: "faculty created successfull", data: result });
 }));
+const getSingleFaculty = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { facultyId } = req.params;
+    const result = yield faculty_service_1.facultyServices.getSingleFacultyIntoDB(facultyId);
+    (0, sendResponse_1.default)(res, { statusCode: 200, message: "faculty created successfull", data: result });
+}));
 const updateFaculty = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const facultyInfo = req.body;
     const { facultyId } = req.params;
     const result = yield faculty_service_1.facultyServices.updateFacultyIntoDB(facultyInfo, facultyId);
-    (0, sendResponse_1.default)(res, { statusCode: 200, message: "faculty update successfull", data: result });
+    (0, sendResponse_1.default)(res, { statusCode: 200, message: "Get single data successfull", data: result });
 }));
 exports.facultyControllars = {
     createFaculty,
+    getSingleFaculty,
     updateFaculty
 };

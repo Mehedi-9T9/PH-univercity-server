@@ -19,9 +19,15 @@ const updateFaculty=catchAsync(async(req:Request,res:Response)=>{
     const result =await facultyServices.updateFacultyIntoDB(facultyInfo,facultyId)
     sendResponse(res,{statusCode:200,message:"Get single data successfull",data:result})
     })
+const searchFaculty=catchAsync(async(req:Request,res:Response)=>{
+
+    const result =await facultyServices.searchFacultyIntoDB(req.query)
+    sendResponse(res,{statusCode:200,message:"Search Data Send successfull",data:result})
+    })
 
 export const facultyControllars ={
     createFaculty,
     getSingleFaculty,
-    updateFaculty
+    updateFaculty,
+    searchFaculty
 }

@@ -1,3 +1,4 @@
+import { Request } from "express"
 import { TFacultyDemo } from "./faculty.interface"
 import { facultyModel } from "./faculty.model"
 
@@ -13,8 +14,52 @@ const getSingleFacultyIntoDB = async (id: string) => {
     const result = await facultyModel.findOne({ _id: id })
     return result
 }
+ 
+const searchFacultyIntoDB = async (quary:Record<string,unknown>) => {
+    console.log(quary);
+    const quaryCopy ={...quary}
+
+    let searchTerm = '';
+    if (quary?.searchTerm) {
+        searchTerm = quary?.searchTerm as string
+    }
+    const searchableField =['firstName', 'lastName']
+    const searchQuary = facultyModel.find({
+            $or: searchableField.map((field) => (
+                {
+    
+                    [field]: { $regex: searchTerm, $options: "i"}
+                }
+            ))
+        })
+        const deleteQuary =['searchTerm','sort','limit']
+        deleteQuary.forEach((item)=> delete quaryCopy[item])
+    const filterQuary = searchQuary.find(quaryCopy)
+    let sort ='-createdAt'
+    if(quary?.sort){
+        sort = quary.sort as string
+    }
+    const sortQuary = filterQuary.sort(sort)
+
+    let limit =1
+    if(quary?.limit){
+        limit =Number(quary.limit)
+    }
+    const limitQuary =await sortQuary.limit(limit)
+    return limitQuary
+    // const result = await facultyModel.find({
+    //     $or: searchableField.map((field) => (
+    //         {
+
+    //             [field]: { $regex: searchTerm, $options: "i"}
+    //         }
+    //     ))
+    // })
+    // return result
+}
 export const facultyServices = {
     createFacultyIntoDB,
     getSingleFacultyIntoDB,
-    updateFacultyIntoDB
+    updateFacultyIntoDB,
+    searchFacultyIntoDB
 }

@@ -21,6 +21,15 @@ const createDepartment = (0, catchAsync_1.default)((req, res, next) => __awaiter
     const result = yield department_service_1.departmentServices.createDepartmentIntoDB(departmentInfo);
     (0, sendResponse_1.default)(res, { statusCode: 200, message: "Department create Successfull", data: result });
 }));
+const getDepartment = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield department_service_1.departmentServices.getDepartmentIntoDB();
+    (0, sendResponse_1.default)(res, { statusCode: 200, message: "All Department Data", data: result });
+}));
+const getSingleDepartment = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { departmentId } = req.params;
+    const result = yield department_service_1.departmentServices.getSingleDepartmentIntoDB(departmentId);
+    (0, sendResponse_1.default)(res, { statusCode: 200, message: "All Department Data", data: result });
+}));
 const updateDepartment = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const departmentInfo = req.body;
     const { departmentId } = req.params;
@@ -29,5 +38,7 @@ const updateDepartment = (0, catchAsync_1.default)((req, res, next) => __awaiter
 }));
 exports.departmentControllars = {
     createDepartment,
+    getDepartment,
+    getSingleDepartment,
     updateDepartment
 };

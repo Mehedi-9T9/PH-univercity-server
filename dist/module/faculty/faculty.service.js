@@ -19,7 +19,12 @@ const updateFacultyIntoDB = (payload, id) => __awaiter(void 0, void 0, void 0, f
     const result = yield faculty_model_1.facultyModel.findByIdAndUpdate({ _id: id }, { name: payload.name }, { new: true });
     return result;
 });
+const getSingleFacultyIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield faculty_model_1.facultyModel.findOne({ _id: id });
+    return result;
+});
 exports.facultyServices = {
     createFacultyIntoDB,
+    getSingleFacultyIntoDB,
     updateFacultyIntoDB
 };

@@ -1,6 +1,8 @@
 import { z } from "zod";
 const facultyValidatioSchema = z.object({
-    name: z.string(),
+    firstName: z.string(),
+    lastName: z.string(),
+    email:z.string()
     
   });
   export default facultyValidatioSchema

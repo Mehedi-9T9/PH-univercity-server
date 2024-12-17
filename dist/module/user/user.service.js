@@ -8,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userServices = void 0;
-const student_model_1 = require("../student/student.model");
+const mongoose_1 = __importDefault(require("mongoose"));
 const user_model_1 = require("./user.model");
 const user_studentId_genaret_1 = require("./user.studentId.genaret");
+const student_model_1 = require("../student/student.model");
 const createUserIntoDB = (studentData) => __awaiter(void 0, void 0, void 0, function* () {
     const userData = {};
     userData.password = 'mehedi200';
@@ -29,12 +33,29 @@ const createUserIntoDB = (studentData) => __awaiter(void 0, void 0, void 0, func
     if (yield user_model_1.userModel.isExists(userData.studentId)) {
         throw new Error('user Already exists');
     }
-    const createdUser = yield user_model_1.userModel.create(userData);
-    if (Object.keys(createdUser).length) {
-        studentData.studentId = createdUser.studentId;
-        studentData.userId = createdUser._id;
-        const createdStudent = yield student_model_1.studentModel.create(studentData);
+    const session = yield mongoose_1.default.startSession();
+    try {
+        session.startTransaction();
+        const createdUser = yield user_model_1.userModel.create([userData], { session });
+        if (!createdUser.length) {
+            throw new Error("user create fail");
+        }
+        studentData.studentId = createdUser[0].studentId;
+        studentData.userId = createdUser[0]._id;
+        const createdStudent = yield student_model_1.studentModel.create([studentData], { session });
+        if (!createdStudent.length) {
+            throw new Error("user create fail");
+        }
+        yield session.commitTransaction();
+        yield session.endSession();
         return createdStudent;
+    }
+    catch (error) {
+        yield session.abortTransaction();
+        yield session.endSession();
+        throw new Error(error);
+    }
+    finally {
     }
 });
 const getSingleUserIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {

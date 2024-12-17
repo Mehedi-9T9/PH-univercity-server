@@ -14,7 +14,20 @@ const mongoose_1 = require("mongoose");
 const departmentSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     facultyId: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Faculty' },
+    confirm: { type: Boolean, required: true }
 });
+class AppError extends Error {
+    constructor(statusCode, message, stack = '') {
+        super(message);
+        this.statusCode = statusCode;
+        if (stack) {
+            this.stack = stack;
+        }
+        else {
+            Error.captureStackTrace(this, this.constructor);
+        }
+    }
+}
 departmentSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         const isExists = yield exports.DepartmentModel.findOne({ name: this.name });
@@ -29,7 +42,7 @@ departmentSchema.pre('findOneAndUpdate', function (next) {
         const quary = this.getQuery();
         const isExists = yield exports.DepartmentModel.findOne(quary);
         if (!isExists) {
-            throw new Error("Department does not change");
+            throw new AppError(404, "Department does not change");
         }
         next();
     });

@@ -5,6 +5,7 @@ import globalErrorHandle from './module/middleware/globalErrorHandelar';
 import notFound from './module/middleware/notFound';
 
 import router from './module/routers';
+import { promise } from 'zod';
 const app = express();
 
 //perser
@@ -15,7 +16,7 @@ app.use(cors());
 app.use('/api/v1', router);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+  Promise.reject()
 });
 
 app.use(globalErrorHandle);

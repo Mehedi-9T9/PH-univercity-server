@@ -15,11 +15,21 @@ const createDepartmentIntoDB = (payload) => __awaiter(void 0, void 0, void 0, fu
     const result = yield department_model_1.DepartmentModel.create(payload);
     return result;
 });
+const getDepartmentIntoDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield department_model_1.DepartmentModel.find().populate("facultyId");
+    return result;
+});
+const getSingleDepartmentIntoDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield department_model_1.DepartmentModel.findOne({ _id: id });
+    return result;
+});
 const updateDepartmentIntoDB = (payload, id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield department_model_1.DepartmentModel.findOneAndUpdate({ _id: id }, { name: payload.name }, { new: true });
     return result;
 });
 exports.departmentServices = {
     createDepartmentIntoDB,
+    getDepartmentIntoDB,
+    getSingleDepartmentIntoDB,
     updateDepartmentIntoDB
 };

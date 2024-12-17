@@ -11,4 +11,5 @@ const requestValidation_1 = __importDefault(require("../middleware/requestValida
 const router = express_1.default.Router();
 router.post('/create-faculty', (0, requestValidation_1.default)(faculty_validation_schema_1.default), faculty_controllar_1.facultyControllars.createFaculty);
 router.patch('/update-faculty/:facultyId', (0, requestValidation_1.default)(faculty_validation_schema_1.default), faculty_controllar_1.facultyControllars.updateFaculty);
+router.get('/:facultyId', faculty_controllar_1.facultyControllars.getSingleFaculty);
 exports.facultyRoutes = router;
