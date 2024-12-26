@@ -32,7 +32,7 @@ const searchFacultyIntoDB = async (quary:Record<string,unknown>) => {
                 }
             ))
         })
-        const deleteQuary =['searchTerm','sort','limit']
+        const deleteQuary =['searchTerm','sort','limit','page',]
         deleteQuary.forEach((item)=> delete quaryCopy[item])
     const filterQuary = searchQuary.find(quaryCopy)
     let sort ='-createdAt'
@@ -41,12 +41,36 @@ const searchFacultyIntoDB = async (quary:Record<string,unknown>) => {
     }
     const sortQuary = filterQuary.sort(sort)
 
-    let limit =1
-    if(quary?.limit){
-        limit =Number(quary.limit)
-    }
-    const limitQuary =await sortQuary.limit(limit)
+  //limit start
+    // let limit =1
+    // if(quary?.limit){
+    //     limit =Number(quary.limit)
+    // }
+    // const limitQuary =await sortQuary.limit(limit)
+    // return limitQuary
+
+
+    //Pazination Start
+    //restart limit
+let page=1
+let limit =1
+let skip =0
+if(quary?.limit){
+    limit =Number(quary.limit)
+}
+if(quary.page){
+    page =Number(quary?.page)
+    skip=(page -1)*limit
+}
+const pazinateQuary =sortQuary.skip(skip)
+
+ const limitQuary =await pazinateQuary.limit(limit)
     return limitQuary
+    
+    
+
+
+
     // const result = await facultyModel.find({
     //     $or: searchableField.map((field) => (
     //         {
