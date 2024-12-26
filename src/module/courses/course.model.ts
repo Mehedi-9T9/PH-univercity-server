@@ -4,8 +4,8 @@ import { preRequisitCoursesDemo, TCourseDemo } from "./course.interface";
 
 
 const preRequisitCoursesShema = new Schema<preRequisitCoursesDemo>({
-    course:{type:Schema.Types.ObjectId,ref:'Course'},
-    isDeleted:{type:Boolean}
+    course: { type: Schema.Types.ObjectId, ref: 'Course' },
+    isDeleted: { type: Boolean }
 })
 const coursesSchema = new Schema<TCourseDemo>({
     title: { type: String, required: true },
@@ -13,7 +13,8 @@ const coursesSchema = new Schema<TCourseDemo>({
     code: { type: Number, required: true },
     creadits: { type: Number, required: true },
     preRequisitCourses: [preRequisitCoursesShema],
-    
-  });
+    isDeleted: { type: Boolean, default: false }
 
- export const CoursesModel = model<TCourseDemo>('Course', coursesSchema);
+});
+
+export const CoursesModel = model<TCourseDemo>('Course', coursesSchema);
